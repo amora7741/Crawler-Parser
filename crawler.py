@@ -26,3 +26,16 @@ class Frontier:
 
     def done(self):
         return not self.queue
+    
+def retrieveURL(url):
+    try:
+        response = urlopen(url)
+        html = response.read()
+        return html
+    except Exception as e:
+        print(f"Error retrieving {url}: {e}")
+        return None
+
+def storePage(url, html):
+    if html:
+        pages.insert_one({'url': url, 'html': html})
