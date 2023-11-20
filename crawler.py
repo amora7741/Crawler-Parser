@@ -48,5 +48,32 @@ def target_page(html):
     for header in headerTags:
         if header.get_text() == "Permanent Faculty":
             return True
+        
+def parse(html, baseURL):
+    bs = BeautifulSoup(html, 'html.parser')
+    links = []
+
+    for link in bs.find_all('a', href=True):
+        href = link['href']
+        fullURL = urljoin(baseURL, href)
+        links.append(fullURL)
+
+    return links
+
+def crawlerThread(frontier):
+    while not frontier.done():
+        url = frontier.nextURL()
+        if url:
+            html = retrieveURL(url)
+            bs = BeautifulSoup(html, 'html.parser')
+            storePage(url, str(bs))
+
+            if target_page(html):
+                print(f"Target page found at {url}")
+                frontier.queue = []
+            else:
+                newLinks = parse(html, url)
+                for newURL in newLinks:
+                    frontier.addURL(newURL)
 
     return False
