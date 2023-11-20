@@ -39,3 +39,14 @@ def retrieveURL(url):
 def storePage(url, html):
     if html:
         pages.insert_one({'url': url, 'html': html})
+
+def target_page(html):
+    bs = BeautifulSoup(html, 'html.parser')
+    
+    headerTags = bs.find_all(['h1', 'h2', 'h3', 'h4', 'h5', 'h6'])
+
+    for header in headerTags:
+        if header.get_text() == "Permanent Faculty":
+            return True
+
+    return False
