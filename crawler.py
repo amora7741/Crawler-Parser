@@ -77,3 +77,8 @@ def crawlerThread(frontier):
                     frontier.addURL(newURL)
 
     return False
+
+if __name__ == "__main__":
+    initialURL = 'https://www.cpp.edu/sci/computer-science/'
+    frontier = Frontier(initialURL)
+    crawlerThread(frontier)
