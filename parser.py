@@ -13,6 +13,10 @@ soup = BeautifulSoup(html.read(), 'html.parser')
 professorInfo = []
 for div in soup.find_all("div", class_="clearfix"):
     professor = {}
+    h2Tag = div.find('h2')
+    
+    if h2Tag:
+        professor['name'] = h2Tag.get_text(strip=True)
 
 db['professors'].insert_many(professorInfo)
 
