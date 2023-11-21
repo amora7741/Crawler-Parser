@@ -9,3 +9,11 @@ pages = db['pages']
 targetURL = pages.find_one({'url': 'https://www.cpp.edu/sci/computer-science/faculty-and-staff/permanent-faculty.shtml'})['url']
 html = urlopen(targetURL)
 soup = BeautifulSoup(html.read(), 'html.parser')
+
+professorInfo = []
+for div in soup.find_all("div", class_="clearfix"):
+    professor = {}
+
+db['professors'].insert_many(professorInfo)
+
+print("Faculty data inserted into MongoDB successfully.")
