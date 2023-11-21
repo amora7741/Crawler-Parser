@@ -18,6 +18,11 @@ for div in soup.find_all("div", class_="clearfix"):
     if h2Tag:
         professor['name'] = h2Tag.get_text(strip=True)
 
+    pTag = div.find('p')
+    if pTag:
+        for strongTag in pTag.find_all('strong'):
+            key = strongTag.get_text(strip=True).replace(':', '').lower()
+
     if 'name' in professor:
         professorInfo.append(professor)
 
