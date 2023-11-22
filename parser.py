@@ -45,4 +45,3 @@ for div in soup.find_all("div", class_="clearfix"):
 db['professors'].insert_many(professorInfo)
 
 print("Faculty data inserted into MongoDB successfully.")
-print("fart")
