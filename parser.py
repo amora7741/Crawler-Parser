@@ -37,6 +37,9 @@ for div in soup.find_all("div", class_="clearfix"):
                 if value:
                     professor[key] = value.get_text(strip=True)
 
+    for k, v in professor.items():
+        professor[k] = v.replace(':', '').strip()
+    
     if 'name' in professor:
         professorInfo.append(professor)
 
