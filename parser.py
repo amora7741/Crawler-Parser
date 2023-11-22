@@ -31,6 +31,12 @@ for div in soup.find_all("div", class_="clearfix"):
                     else:
                         professor[key] = aTag['href'] #get entire link including https
 
+            else: #all other information which does not contain an a tag
+                value = strongTag.next_sibling
+
+                if value:
+                    professor[key] = value.get_text(strip=True)
+
     if 'name' in professor:
         professorInfo.append(professor)
 
