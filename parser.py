@@ -21,7 +21,15 @@ for div in soup.find_all("div", class_="clearfix"):
     pTag = div.find('p')
     if pTag:
         for strongTag in pTag.find_all('strong'):
-            key = strongTag.get_text(strip=True).replace(':', '').lower()
+            key = strongTag.get_text(strip=True).replace(':', '').lower() #get info tags, remove colons
+            
+            if key in ['email', 'web']: #if on email or website tag, move to corresponding a tag
+                aTag = strongTag.find_next('a')
+                if aTag:
+                    if key == 'email':
+                        professor[key] = aTag.get_text(strip=True)
+                    else:
+                        professor[key] = aTag['href'] #get entire link including https
 
     if 'name' in professor:
         professorInfo.append(professor)
